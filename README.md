@@ -1,10 +1,20 @@
-# PDF.js
+# PDF.js with build artifacts
 
 PDF.js is a Portable Document Format (PDF) viewer that is built with HTML5.
 
 PDF.js is community-driven and supported by Mozilla Labs. Our goal is to
 create a general-purpose, web standards-based platform for parsing and
 rendering PDFs.
+
+## Building
+
+Run:
+
+    npm i
+    gulp dist
+
+The build artifacts are then located in the build/ directory.
+
 
 ## Contributing
 
