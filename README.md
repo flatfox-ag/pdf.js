@@ -11,9 +11,11 @@ rendering PDFs.
 Run:
 
     npm i
-    gulp dist
+    gulp generic
 
-The build artifacts are then located in the build/ directory.
+The build artifacts are then located in the build/ directory. The files that
+are used for the web viewer are located in build/generic/build/ (the pdf.js) and
+build/generic/web/ (the viewer).
 
 
 ## Contributing
