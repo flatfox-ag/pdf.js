@@ -21,7 +21,8 @@
  */
 /*
   Additional modifications for PDF.js project:
-    - Disables language initialization on page loading;
+    - Disables language initialization on page loading.
+    - Disables document translation on page loading.
     - Removes consoleWarn and consoleLog and use console.log/warn directly.
     - Removes window._ assignment.
     - Remove compatibility code for OldIE.
@@ -101,9 +102,7 @@ document.webL10n = (function(window, document, undefined) {
 
   function xhrLoadText(url, onSuccess, onFailure) {
     onSuccess = onSuccess || function _onSuccess(data) {};
-    onFailure = onFailure || function _onFailure() {
-      console.warn(url + ' not found.');
-    };
+    onFailure = onFailure || function _onFailure() {};
 
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url, gAsyncResourceLoading);
@@ -146,10 +145,10 @@ document.webL10n = (function(window, document, undefined) {
    *    locale (language) to parse. Must be a lowercase string.
    *
    * @param {Function} successCallback
-   *    triggered when the l10n resource has been successully parsed.
+   *    triggered when the l10n resource has been successfully parsed.
    *
    * @param {Function} failureCallback
-   *    triggered when the an error has occured.
+   *    triggered when the an error has occurred.
    *
    * @return {void}
    *    uses the following global variables: gL10nData, gTextData, gTextProp.
@@ -244,7 +243,10 @@ document.webL10n = (function(window, document, undefined) {
       function loadImport(url, callback) {
         xhrLoadText(url, function(content) {
           parseRawLines(content, false, callback); // don't allow recursive imports
-        }, null);
+        }, function () {
+          console.warn(url + ' not found.');
+          callback();
+        });
       }
 
       // fill the dictionary
@@ -997,7 +999,6 @@ document.webL10n = (function(window, document, undefined) {
       loadLocale(lang, function() {
         if (callback)
           callback();
-        translateFragment();
       });
     },
 
